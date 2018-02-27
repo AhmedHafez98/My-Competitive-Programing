@@ -35,7 +35,7 @@ public :
 	{
 		if (length == mx)
 		{
-			cout << "List is Full" << endl;
+			cout << "              List is Full" << endl;
 			return 0;
 		}
 		list[length] = item;
@@ -60,12 +60,12 @@ public :
 		int idx = search(item);
 		if (length == 0)
 		{
-			cout << "Empty" << endl;
+			cout << "              Empty" << endl;
 			return 0;
 		}
 		if (idx == -1)
 		{
-			cout << "NOT Found" << endl;
+			cout << "              NOT Found" << endl;
 			return 0;
 		}
 		for (int i = idx; i < length - 1; i++)
@@ -101,27 +101,26 @@ int main()
 	List a(1000);
 	do {
 		system("CLS");
-		cout << " Options : " <<
-			"0 - exit\n" <<
-			"1 - add\n" <<
-			"2 - remove\n" <<
-			"3 - sort\n" <<
-			"4 - get the size\n" <<
-			"5 - print \n" << 
-			"6 - Search\n"<<endl;
-		cout << "choose option" << endl;
+		cout << "\n\n\n\n              Options : \n" <<
+			"              1 - add\n" <<
+			"              2 - remove\n" <<
+			"              3 - sort\n" <<
+			"              4 - get the size\n" <<
+			"              5 - print \n" <<
+			"              6 - Search\n" << "                                         0 - exit\n";
+		cout << "                        choose option  : ";
 		cin >> ch;
 		switch (ch)
 		{
 		case 1:
-			cout << "Enter elemnt : ";
+			cout << "                        Enter elemnt : ";
 			int item;
 			cin >> item;
 			a.add(item);
 			system("pause");
 			break;
 		case 2:
-			cout << "Enter elemnt : ";
+			cout << "                        Enter elemnt : ";
 			item;
 			cin >> item;
 			a.remove(item);
@@ -133,26 +132,26 @@ int main()
 			system("pause");
 			break;
 		case 4:
-			cout << "the size is "<<a.size() << endl;
+			cout << "                        the size is "<<a.size() << endl;
 			system("pause");
 			break;
 		case 5:
 			if (a.size() == 0)
-				cout << "the list is empty";
+				cout << "                        the list is empty";
 			else
 			{
-				cout << "list elements is ->>  ";
+				cout << "                        list elements is ->>  ";
 				a.print();
 				system("pause");
 			}
 			break;
 		case 6:
-			cout << "Enter elemnt : ";
+			cout << "                        Enter elemnt : ";
 			 item;
 			cin >> item;
 			if (a.search(item) == -1)
-				cout << "Not found" << endl;
-			cout <<"the index is"<< a.search(item) << endl;
+				cout << "                        Not found" << endl;
+			cout <<"                        the index is"<< a.search(item) << endl;
 			break;
 		default:
 			break;
