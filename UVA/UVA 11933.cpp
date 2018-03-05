@@ -25,7 +25,7 @@ int dy[]{-1, 0, 1, -1, 1, -1, 0, 1}; // Dir array
 
 void file(){
 #ifndef ONLINE_JUDGE
-	freopen("input.txt", "r", stdin); freopen("output.txt", "w", stdout);  
+	freopen("input.txt", "r", stdin); freopen("output.txt", "w", stdout);
 #endif
 }
 
@@ -33,19 +33,43 @@ int main()
 {
 	//cout << setprecision(20) << fixed;
 	// negative MOD (a%x+x)%x;
-	//file();
+	file();
 	//	freopen("friday.in", "r", stdin);
 	///////////
 	JSE
 		////////// define 
 		int n;
-	cin >> n;
-	vector<int>v(n);
-	for (int i = 0; i < n; i++)
-		cin >> v[i];
-	sort(all(v));
-	reverse(all(v));
-	for (int i = 0; i < n; i++)
-		cout << v[i] << endl;
+	while (cin >> n)
+	{
+		if (!n)
+			break;
+		bitset<32>a(n), b, c;
+	//	cout << a.to_string() << endl;
+		int idx = 0;
+		for (int i = 0; i < sz(a); i++)
+		{
+			if (a[i] == 1)
+			{
+				idx++;
+				if (idx & 1)
+				{
+					b[i] = 1;
+					c[i] = 0;
+				}
+				else
+				{
+					c[i] = 1;
+					b[i] = 0;
+				}
+			}
+			else
+			{
+				b[i] = 0;
+				c[i] = 0;
+			}
+			
+		}
+		cout << b.to_ullong()<< ' ' << c.to_ullong() << endl;
+	}
 	return 0;
 }

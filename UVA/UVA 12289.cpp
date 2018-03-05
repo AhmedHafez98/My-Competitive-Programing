@@ -25,7 +25,7 @@ int dy[]{-1, 0, 1, -1, 1, -1, 0, 1}; // Dir array
 
 void file(){
 #ifndef ONLINE_JUDGE
-	freopen("input.txt", "r", stdin); freopen("output.txt", "w", stdout);  
+	freopen("input.txt", "r", stdin); freopen("output.txt", "w", stdout);
 #endif
 }
 
@@ -38,14 +38,27 @@ int main()
 	///////////
 	JSE
 		////////// define 
-		int n;
-	cin >> n;
-	vector<int>v(n);
-	for (int i = 0; i < n; i++)
-		cin >> v[i];
-	sort(all(v));
-	reverse(all(v));
-	for (int i = 0; i < n; i++)
-		cout << v[i] << endl;
+		int t;
+	cin >> t;
+	while (t--)
+	{
+		string s;
+		string t[3] = { "one", "two", "three" };
+		cin >> s;
+		int cnt = 0;
+		for (int i = 0; i < 3; i++)
+		{
+			cnt = 0;
+			for (int j = 0; j < min(sz(s), sz(t[i])); j++)
+			{
+				if (s[j] != t[i][j])
+					cnt++;
+			}
+			if (cnt < 2)
+			{
+				cout << i + 1 << endl; break;
+			}
+		}
+	}
 	return 0;
 }
