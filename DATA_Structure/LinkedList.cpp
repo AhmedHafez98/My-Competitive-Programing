@@ -52,6 +52,12 @@ public:
 			n->next = NULL;
 			return;
 		}
+		if (Head->data > d)
+		{
+			n->next = Head;
+			Head = n;
+			return;
+		}
 		node<ItemType>* t = Head;
 		while (t->next != NULL&&n->data>t->next->data)
 		{
@@ -59,16 +65,8 @@ public:
 		}
 		if (t->next == NULL)
 		{
-			if (t->data <= n->data)
-			{
 				t->next = n;
 				n->next = NULL;
-			}
-			else
-			{
-				n->next = t;
-				Head = n;
-			}
 		}
 		else
 		{
