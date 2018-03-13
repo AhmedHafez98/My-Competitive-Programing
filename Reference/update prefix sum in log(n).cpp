@@ -33,6 +33,7 @@ template<class Int> Int gcd(Int a, Int b) {return b == 0 ? abs(a) : gcd(b, a % b
 ll tree[10001];
 void add(int idx, int val)
 {
+	idx++;
 	while (idx <= 10000)
 	{
 		tree[idx - 1] += val;
@@ -41,6 +42,7 @@ void add(int idx, int val)
 }
 ll get(int idx)
 {
+	idx++;
 	ll ret = 0;
 	while (idx)
 	{
@@ -62,10 +64,10 @@ int main()
 
 	cin >> n>>q;
 	vector<int>v(n);
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < n; i++) {
 		cin >> v[i];
-	for (int i = 1; i < n; i++)
-		v[i] += v[i - 1];
+		add(i, v[i]);
+	}
 	while (q--)
 	{
 		int bol;
@@ -74,13 +76,14 @@ int main()
 		{
 			int idx, val;
 			cin >> idx >> val;
-			add(idx, val);
+			add(idx, val - v[idx]);
+			v[idx] = val;
 		}
 		else
 		{
-			for (int i = 1; i <= n; i++)
-				cout << v[i-1]+get(i) << ' ';
-			cout << endl;
+			int l, r;
+			cin >> l >> r;
+			cout << get(r) - get(l - 1) << endl;
 		}
 	}
 	return 0;
