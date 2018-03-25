@@ -26,29 +26,24 @@ void file(){
 #ifndef ONLINE_JUDGE
 	freopen("input.txt", "r", stdin);
 
-	//freopen("output.txt", "w", stdout);
+	freopen("output.txt", "w", stdout);
 
 #endif
 }
-ll f(ll x)
-{
-	int num = 0;
-	ll y = x;
-	while (y)
-	{
-		num += y % 10;
-		y /= 10;
-	}
-	return x*x + num*x;
-}
-
+struct node{
+	int x, r;
+	bool ch;
+};
+int a[int(1e6)+3];
 int main()
 {
 	//cout << setprecision(20) << fixed;
 	// negative MOD (a%x+x)%x;
-	file();
+	
 	//	freopen("friday.in", "r", stdin);
 	///////////
+	file();
+	
 	fast
 		int n;
 	while (cin >> n)
@@ -60,10 +55,21 @@ int main()
 		cin >> q;
 		while (q--)
 		{
-			ll x;
+			int x;
 			cin >> x;
-			
+			int first = lower_bound(all(v), x) - v.begin();
+			first--;
+			if (first < 0)
+				cout << "X ";
+			else
+				cout << v[first] << ' ';
+			int last = upper_bound(all(v), x) - v.begin();
+			if (last == n)
+				cout << "X" << endl;
+			else
+				cout << v[last] << endl;
 		}
+
 	}
 
 	return 0;
