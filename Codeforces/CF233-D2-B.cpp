@@ -50,21 +50,25 @@ int main()
 	//	freopen("friday.in", "r", stdin);
 	///////////
 	fast
-		int n;
-	while (cin >> n)
+		ll n;
+	cin >> n;
+	ll ans = -1;
+	for (ll x = sqrt(n); x >= sqrt(n)-1000; x--)
 	{
-		vector<int>v(n);
-		for (int i = 0; i < n; i++)
-			cin >> v[i];
-		int q;
-		cin >> q;
-		while (q--)
+		int num = 0;
+		ll y = x;
+		while (y)
 		{
-			ll x;
-			cin >> x;
-			
+			num += y % 10;
+			y /= 10;
 		}
+		if (x*x + num*x == n)
+		{
+			cout << x << "\n"; return 0;
+		}
+
 	}
+	cout << ans << endl;
 
 	return 0;
 }
