@@ -1,0 +1,263 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+#define all(v) ((v).begin()),((v).end())
+#define allr(v)	     ((v).rbegin()), ((v).rend())
+#define sz(v) ((int)(v).size())
+#define fast ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+typedef long long ll;
+typedef unsigned long long ull;
+typedef  double ld;
+const ll OO = (ll)1e18;
+const ll mod = (1e9) + 7;
+const ld PI = acos(-1.0);
+const ld EPS = 1e-8;
+fstream catogries[7];
+map<int, string>mp;
+struct user
+{
+	string name;
+	string pass;
+};
+void alef()
+{
+	cout << "\n\n\n\n\n\n";
+	cout << "		                                                      ____________      ___________                    \n";
+	cout << "		                        /\\            |              |                 |               \n";
+	cout << "		                       /  \\           |              |                 |                    \n";
+	cout << "		                      /    \\          |              |                 |                     \n";
+	cout << "		                     /      \\         |              |                 |                            \n";
+	cout << "		                    /        \\        |              |____________     |___________               \n";
+	cout << "		                   /__________\\       |              |                 |                   \n";
+	cout << "		                  /            \\      |              |                 |                     \n";
+	cout << "		                 /              \\     |              |                 |                          \n";
+	cout << "		                /                \\    |__________    |____________     |                      \n";
+}
+void login()
+{
+		cout << "		                        < Register >\n";
+		cout << "		                        Please Enter Your username :";
+		user in;
+		cin >> in.name;
+		cout << "		                        Please Enter Your password :";
+		cin >> in.pass;
+		fstream username, userpass;
+		username.open("User/username.txt", ios::app);
+		username << in.name << endl;
+		username.close();
+		userpass.open("User/userpass.txt", ios::app);
+		userpass << in.pass << endl;
+		userpass.close();
+}
+void one()
+{
+	int option;
+	do
+	{
+		system("CLS");
+		cout << "\n\n\n\n\n";
+		cout << "	                                                      ____   ____        \n";
+		cout << "		                                 /\\    |     |      |         \n";
+		cout << "		                                /  \\   |     |____  |____              \n";
+		cout << "		                               /----\\  |     |      |          \n";
+		cout << "		                              /      \\ |____ |____  |          \n";
+		cout << "\n";
+		cout << "	                      		      -> Choose the number of catogry :)  " << endl;
+		cout << "                              		 ____________________________________" << endl;
+		cout << "	                      		|   1- Books for law                 |" << endl;
+		cout << "	                     		|   2- Human Development             |" << endl;
+		cout << "                        		|   3- literature                    |" << endl;
+		cout << "                        		|   4- Medical Books                 |" << endl;
+		cout << "                        		|   5- Programing                    |" << endl;
+		cout << "                        		|   6- scientific books              |" << endl;
+		cout << "		                   	| press 0 to return     (:           |" << endl;
+		cout << "		               		|____________________________________|" << endl;
+		cout << "	                       		";
+		cin >> option;
+		if (option>6)
+		{
+			cout << "		               		 invalid input !" << endl;
+			system("pause");
+		}
+		else if (option )
+		{
+			int op2;
+			do {
+				system("CLS");
+				cout << "\n\n\n\n\n";
+				cout << "	                                                      ____   ____        \n";
+				cout << "		                                 /\\    |     |      |         \n";
+				cout << "		                                /  \\   |     |____  |____              \n";
+				cout << "		                               /----\\  |     |      |          \n";
+				cout << "		                              /      \\ |____ |____  |          \n";
+				cout << "\n";
+				int cnt = 0;
+				catogries[option].open("Books/" + mp[option]+".txt");
+				cout << "\n";
+				string fxx = mp[option];
+				for (int j = 0; j < sz(fxx); j++)
+				{
+					if (fxx[j] == '_')
+						fxx[j] = ' ';
+				}
+				cout << " 		                              " << fxx << " :) " << "\n\n";
+				while (!catogries[option].eof())
+				{
+					cnt++;
+					string s;
+					catogries[option] >> s;
+					for (int i = 0; i < sz(s); i++)
+					{
+						if (s[i] == '_')
+							s[i] = ' ';
+					}
+					cout << "	                      		" << s << endl;
+				}
+				cout << "		                   	   press 0 to return     (:           " << endl;
+				cout << "\n	                      	     -> Choose the number of book :)  ";
+				catogries[option].close();
+				cin >> op2;
+				if (op2>cnt)
+				{
+					cout << "		               		 invalid input !" << endl;
+					system("pause");
+				}
+				else if (op2)
+				{
+					string s = "start Books/" + mp[option] + "/" + to_string(op2) + ".pdf";
+					system(s.c_str());
+				}
+
+			} while (op2!=0);
+		}
+	} while (option != 0);
+}
+void tow()
+{
+	system("CLS");
+	cout << "\n\n\n\n\n";
+	cout << "	                                                      ____   ____        \n";
+	cout << "		                                 /\\    |     |      |         \n";
+	cout << "		                                /  \\   |     |____  |____              \n";
+	cout << "		                               /----\\  |     |      |          \n";
+	cout << "		                              /      \\ |____ |____  |          \n";
+	cout << "\n";
+	cin.ignore();
+	string nameofbook;
+	cout <<"Enter the name of book : ";
+	getline(cin, nameofbook);
+	bool flag = 0;
+	string path;
+	for (int i = 1; i < 7&&!flag; i++)
+	{
+		catogries[i].open("Books/"+mp[i]+".txt");
+		while (!catogries[i].eof())
+		{
+			string s;
+			catogries[i] >> s;
+			bool f = 1,f2=1;
+			string num, name;
+
+			for (int i = 0; i < sz(s); i++)
+			{
+				if (s[i] == '-'&&f2)
+					f2 = 0;
+				else if (f2)
+					num += s[i];
+				else
+				{
+					if (s[i] == '_')
+						name += ' ';
+					else name += s[i];
+				}
+			}
+			if (name==nameofbook)
+			{
+				flag = 1;
+				path = "start Books/" + mp[i] + "/" + num + ".pdf";
+				break;
+			}
+		}
+		catogries[i].close();
+	}
+	if (flag)
+		system(path.c_str());
+	else
+		cout << "\n		                        Sorry,The book not found :( " << endl;
+	system("pause");
+}
+void show()
+{
+	string op;
+	do {
+		system("CLS");
+		cout << "\n\n\n\n\n";
+		cout << "	                                                      ____   ____        \n";
+		cout << "		                                 /\\    |     |      |         \n";
+		cout << "		                                /  \\   |     |____  |____              \n";
+		cout << "		                               /----\\  |     |      |          \n";
+		cout << "		                              /      \\ |____ |____  |          \n";
+		cout << "\n";
+		cout << "                              		 ____________________________________" << endl;
+		cout << "	                      		|  press 1 to show catogries of books|" << endl;
+		cout << "	                     		|  press 2 to search about book      |" << endl;
+		cout << "		                   	|  press 3 to logout     (:          |" << endl;
+		cout << "		               		|____________________________________|" << endl;
+		cout << "	                       		"; 
+		cin >> op;
+
+		if (op != "1" && op != "2" && op != "3")
+		{
+		cout << "		               		 invalid input !" << endl;
+		system("pause");
+		}
+		else if (op == "1")
+		{
+			one();
+		}
+		else if (op == "2")
+		{
+			tow();
+		}
+		
+	} 
+	while (op != "3");
+	
+	cout << "                Please Enter Your Note : ";
+	fstream note;
+	note.open("User/usernote.txt", ios::app);
+	string nt;
+	cin.ignore();
+	getline(cin, nt);
+	note << nt << endl;
+	system("pause");
+}
+void run()
+{
+	catogries[0].open("Books/catogries.txt");
+	int idx = 1;
+	while (!catogries[0].eof())
+	{
+		string s;
+		catogries[0] >> s;
+		mp[idx++] = s;
+	}
+	catogries[0].close();
+}
+int main()
+{
+	fast
+	while (1)
+	{
+		system("CLS");
+		run();
+		alef();
+		login();
+		show();
+	}
+
+}
