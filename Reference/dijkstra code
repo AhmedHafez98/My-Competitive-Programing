@@ -1,0 +1,92 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include<bits/stdc++.h>
+
+using namespace std;
+
+#define all(v) ((v).begin()),((v).end())
+#define allr(v)	     ((v).rbegin()), ((v).rend())
+#define sz(v) ((int)(v).size())
+#define clr(arr, val)        memset(arr, val, sizeof(arr))
+#define fast ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+
+typedef long long ll;
+typedef unsigned long long ull;
+typedef  double ld;
+const ll OO = (ll)1e18;
+const ll mod = (1e9) + 7;
+const ld PI = acos(-1.0);
+const ld EPS = 1e-8;
+
+int dx[]{-1, -1, -1, 0, 0, 1, 1, 1}; // Dir array
+int dy[]{-1, 0, 1, -1, 1, -1, 0, 1}; // Dir array
+
+void file(){
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+
+	//freopen("output.txt", "w", stdout);
+
+#endif
+}
+//5 7
+//1 4 10
+//1 3 4
+//4 5 2
+//3 4 2
+//3 5 3
+//2 3 2
+//5 2 2
+int n, m;
+vector<vector<pair<int,int>>>adj;
+vector<int>dis;
+vector<bool>vis;
+void dijk(int s)
+{
+	priority_queue<pair<int, int>>pq;
+	pq.push({ 0, s });
+	dis[s]=0;
+	vis[s] = 1;
+	while (sz(pq))
+	{
+		int u = pq.top().second;
+		vis[u] = 1;
+		pq.pop();
+		for (int i = 0; i < sz(adj[u]); i++)
+		{
+			int v = adj[u][i].first;
+			if (vis[v])continue;
+			if (dis[v]>dis[u] + adj[u][i].second)
+			{
+				dis[v] = dis[u] + adj[u][i].second;
+				pq.push({ -dis[v], v });
+			}
+		}
+	}
+	
+}
+int main()
+{
+	//cout << setprecision(7) << fixed;
+	// negative MOD (a%x+x)%x;
+
+	//	freopen("friday.in", "r", stdin);
+	///////////
+
+	file();
+	fast
+		cin >> n >> m;
+	dis = vector<int>(n+1, 1e9);
+	vis = vector<bool>(n+1, 0);
+	adj = vector<vector<pair<int,int>>>(n+1);
+	for (int i = 0; i < m; i++)
+	{
+		int v, u, w;
+		cin >> v >> u >> w;
+		adj[v].push_back({ u, w });
+	}
+	dijk(1);
+	for (int i = 1; i <= n; i++)
+		cout << dis[i] << ' ';
+	cout << endl;
+}
