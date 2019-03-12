@@ -47,6 +47,8 @@ void merge(int a[], int s, int m, int e)
 	}
 	while (i <= m)
 		a[k++] = temp[i++];
+	while(j<=e)
+		a[k++]=temp[j++];
 }
 
 void merge_sort(int a[], int s, int e)
