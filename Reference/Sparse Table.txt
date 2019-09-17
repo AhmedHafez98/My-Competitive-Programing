@@ -1,0 +1,63 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<bits/stdc++.h>
+#include<unordered_map>
+using namespace std;
+#define sz(v) ((int)(v).size())
+// O(nlogn) process and O(1) query
+template<class T>
+struct spt {
+	vector<vector<T>>sp;
+	vector<T>inp;
+	int n;
+	spt(vector<T>&v) {
+		n = sz(v);
+		int log = log2(n);
+		log++;
+		sp = vector<vector<T>>(n, vector<T>(log));
+		inp = v;
+		preprocess();
+	}/*
+	 _build table max(j)=log2(n)+1 and max(i)=n
+	 _each element in sp[i][j] mean the answer for query of l=i and r=i+2^j-1
+	 to calc sp[i][j] efficiency
+	sp[i][j-1]	--------------------\\
+									  |->> sp[i][j]
+	sp[i + (1 << (j - 1))][j - 1]]--//*/
+	void preprocess() {
+		for (int i = 0; i < n; i++)sp[i][0] = i;
+		for (int j = 1; (1 << j) <= n; j++)
+			for (int i = 0; i + (1 << j) - 1 < n; i++)
+				// the condition to build the table RMQ ,sum range, GCD,LCM,
+				if (inp[sp[i][j - 1]] < inp[sp[i + (1 << (j - 1))][j - 1]])sp[i][j] = sp[i][j - 1];
+				else
+					sp[i][j] = sp[i + (1 << (j - 1))][j - 1];
+	}
+	// k is the maximum power of 2 between l ,r and l,r are 0 Indexed
+	T rmq(int l, int r,T inofans) { // the intial value of ans
+		int k = log2(r - l + 1) + 1;
+		T ans = inofans; 
+		while (k >= 0)
+			if (l + (1 << k) - 1 <= r) {
+				ans = min(ans, inp[sp[l][k]]);
+				l += (1 << k);
+				k = log2(r - l + 1);
+			}
+			else k--;
+		return ans;
+	}
+};
+int main(){
+	int n;
+	cin >> n;
+	vector<int>v(n);
+	for (int i = 0; i < n; i++)
+		cin >> v[i];
+	int q;
+	cin >> q;
+	spt<int> S(v);
+	while (q--) {
+		int l, r;
+		cin >> l >> r;
+		cout << S.rmq(l, r,INT_MAX) << endl;
+	}
+}

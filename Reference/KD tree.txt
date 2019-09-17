@@ -1,0 +1,77 @@
+
+const int N = 1e5 + 5;
+int x[N], y[N], ind[N];
+struct  node{
+	int mnX, mnY, mxX, mxY, ind;
+	node *lf, *rt;
+	node() :mnX(1e9), mxX(0), mnY(1e9), mxY(0), lf(this), rt(this){}
+	node(int ind, node *lf, node *rt) : ind(ind), lf(lf), rt(rt){
+		mnX = min({ x[ind], lf->mnX, rt->mnX });
+		mxX = max({ x[ind], lf->mxX, rt->mxX });
+		mnY = min({ y[ind], lf->mnY, rt->mnY });
+		mxY = max({ y[ind], lf->mxY, rt->mxY });
+	}
+};
+node* empty = new node;
+node* build(int st, int en, bool isX){
+	if (st > en)return empty;
+	int mid = (st + en) / 2;
+	nth_element(ind + st, ind + mid, ind + en + 1, [isX](int a, int b){
+		if (isX)return x[a] < x[b];
+		return y[a] < y[b];
+	});
+	return new node(ind[mid], build(st, mid - 1, !isX), build(mid + 1, en, !isX));
+}
+void getLine(int xi, int yi, ll &a,ll &b,ll &c){
+	/*
+		(xi,0),(0,yi)
+		dx=-xi
+		dy=yi
+		y=(dy/dx)x+yi
+		y*dx=x*dy+yi*dx
+		dy*x-dx*y+yi*dx=0
+		=>ax+by+c=0
+		a=dy
+		b=-dx
+		c=yi*dx
+	*/
+	ll dx = -xi;
+	ll dy = yi;
+	a = dy;
+	b = -dx;
+	c = yi*dx;
+}
+ll getVal(int x, int y, ll a, ll b, ll c){ 
+	return a*x + b*y + c;
+}
+int query(ll a,ll b,ll c,node *cur){
+	ll v1 = getVal(cur->mnX, cur->mnY, a, b, c);
+	ll v2 = getVal(cur->mxX, cur->mxY, a, b, c);
+	if (v1<0 && v2<0 || v1>0 && v2>0 || cur == empty)return 0;
+	int curInLine = getVal(x[cur->ind], y[cur->ind], a, b, c) == 0;//current point in the line
+	return curInLine + query(a, b, c, cur->lf) + query(a, b, c, cur->rt);
+}
+int main()
+{
+	/***  ??? ???? ?????? ??????   ***/
+	file();
+	fast();
+	int t;
+	scanf("%d", &t);
+	while (t--){
+		int n, m;
+		scanf("%d%d", &n, &m);
+		for (int i = 0; i < n; i++){
+			scanf("%d%d", x + i, y + i);
+			ind[i] = i;
+		}
+		node *root = build(0, n - 1, 1);
+		while (m--){
+			int xi, yi;
+			scanf("%d%d", &xi, &yi);
+			ll a, b, c;
+			getLine(xi, yi, a, b, c);
+			printf("%d\n", query(a, b, c, root));
+		}
+	}
+}

@@ -1,0 +1,47 @@
+
+const int N = 2e6 + 5, base = 29;
+ll power[N], hashVal[N];
+char str[N];
+int sz;
+void buildHash(){
+	for (int i = 1; i <2* sz; i++)
+		hashVal[i] = hashVal[i - 1] * base + str[i] - 'a' + 1;
+}
+void buildPower(){
+	power[0] = 1;
+	for (int i = 1; i < N; i++)
+		power[i] = power[i - 1] * base;
+}
+ll getHash(int i, int j){
+	return hashVal[j] - hashVal[i - 1] * power[j - i + 1];
+}
+int main()
+{
+	/***  ??? ???? ?????? ??????   ***/
+	file();
+	fast();
+	buildPower();
+	int t;
+	scanf("%d", &t);
+	while (t--){
+		scanf("%s", str + 1);
+		sz = strlen(str + 1);
+		memcpy(str + sz + 1, str + 1, sz - 1);
+		buildHash();
+		vector<int> v(sz);
+		v[sz - 1] = 1;
+		for (int i = 1, j; i <= sz; i=j+1){
+			for (j = i; j < 2 * sz; j++)
+			if (str[j] == str[j + 1] || j - i + 1 == sz)
+				break;
+			for (int subLen = 1; subLen <= j - i + 1; subLen++){
+				int checkLen = j - i + 1 - subLen;
+				if (getHash(i, i + checkLen) != getHash(j - checkLen, j))
+					v[sz-subLen] = 1;
+			}
+		}
+		for (int i : v)printf("%d", i);
+		printf("\n");
+
+	}
+}

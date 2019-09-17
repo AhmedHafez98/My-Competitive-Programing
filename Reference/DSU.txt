@@ -1,0 +1,19 @@
+struct DSU{
+	vector<int>par;
+	int forests;
+	DSU(int n){
+		par = vector<int>(n,-1);
+		forests = n;
+	}
+	int root(int v) { return par[v] < 0 ? v : (par[v] = root(par[v])); }
+	bool chk(int x, int y) { return root(x) == root(y); }
+	int cmpsz(int x) { return -par[root(x)]; }
+	void merge(int x, int y) {	//	x and y are some tools (vertices)
+		if ((x = root(x)) == (y = root(y)))return;
+			if (par[y] < par[x])	// balancing the height of the tree
+				swap(x, y);
+			par[x] += par[y];
+			par[y] = x;
+			forests--;
+	}
+};
