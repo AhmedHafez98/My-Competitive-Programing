@@ -1,0 +1,22 @@
+ll minswaps(vector<pair<int,int>>v, int n)
+{
+	sort(all(v));
+	vector<int>vis(n);
+	ll ans = 0;
+	for (int i = 0; i < n; i++)
+	{
+		if (v[i].second != i && !vis[i])
+		{
+			int cnt = 0;
+			int j = i;
+			while (!vis[j])
+			{
+				vis[j] = 1;
+				j = v[j].second;
+				cnt++;
+			}
+			ans += cnt - 1;
+		}
+	}
+	return ans;
+}

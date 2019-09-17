@@ -1,0 +1,53 @@
+#include<bits/stdc++.h>
+#include<unordered_map>
+using namespace std;
+#define ll long long
+#define endl '\n'
+#define RT(v) return cout<<v,0
+#define sz(v) (int)(v.size())
+#define all(v) v.begin(),v.end()
+#define clr(v,val) memset(v,val,sizeof(v))
+#define watch(x) cout<<(#x)<<" = "<<x<<endl
+const int oo = INT_MAX, mod = 1e9 + 7;
+const double PI = acos(-1), EPS = 1e-8;
+int dr[]{ -1, 1, 0, 0, 1, 1, -1, -1 };
+int dc[]{ 0, 0, 1, -1, 1, -1, 1, -1 };
+void run() {
+	ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#ifndef ONLINE_JUDGE
+	freopen("input.in", "r", stdin); //freopen("output.out", "w", stdout);
+#else
+#endif
+}
+vector<int> v;
+struct cmp {
+	bool operator() (const int& a, const int& b) const {
+		if (v[a] == v[b])return a < b;
+		return v[a] > v[b];
+	}
+};
+int main() {
+	run();
+	int t; cin >> t;
+	while (t--) {
+		int n, m; cin >> n >> m;
+		v = vector<int> (n + 1, 0);
+		vector<int> q(m + 1);
+		q[0] = 1;
+		set<int, cmp> st;
+		for (int i = 1; i <= n; i++)
+			st.insert(i);
+		for (int i = 1; i <= m; i++) {
+			int x, y; cin >> x >> y;
+			st.erase(x);
+			v[x] += y;
+			st.insert(x);
+			q[i] = *st.begin();
+		}
+		int id = q[m], ans = m;
+		while (ans--) {
+			if (q[ans] != id)break;
+		}
+		cout << ans + 1 << endl;
+	}
+}

@@ -1,0 +1,19 @@
+// lower_bound to get ans[i]>ans[i-1];
+// upper_bound to get ans[i]>=ans[i-1];
+
+template<class Int>
+vector<int> Lis(Int &S)
+{
+	vector<int> l(sz(S));
+	vector<int>ans(sz(S));
+	int len = 0;
+	for (int i = 0; i < sz(S); i++)
+	{
+		int pos = lower_bound(l.begin(), l.begin() + len, S[i]) - l.begin();
+		l[pos] = S[i];
+		if (pos == len)
+			len++;
+		ans[i] = len;
+	}
+	return ans;
+}

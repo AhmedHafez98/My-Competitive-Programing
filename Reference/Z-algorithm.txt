@@ -1,0 +1,28 @@
+vector<int>calcZ(string s) {
+	vector<int>Z(s.size());
+	int left = 0, right = 0;
+	for (int k = 1; k < s.size(); k++) {
+		// match the longest substr from k with the prefix of s
+		if (k > right) {
+			left = right = k;
+			while (right < s.size() && s[right] == s[right - left])
+				right++;
+			Z[k] = right - left;
+			right--;
+		}
+		else {
+			int k1 = k - left;
+			if (Z[k1] < right - k + 1)  // if this sub don't reach to the last of max matched substr then don't calc again
+				Z[k] = Z[k1];
+			else {// if this sub reached to the last of max matched substr then calc again from left =k and the same right
+				left = k;
+				while (right < s.size() && s[right] == s[right - left])
+					right++;
+				Z[k] = right - left;
+				right--;
+			}
+		}
+	}
+	return Z;
+
+}

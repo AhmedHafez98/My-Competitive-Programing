@@ -1,0 +1,66 @@
+struct segtree {
+
+	// 1-based segment tree to get rmq in log(n) with lazy
+	vector<ll>arr;
+	vector<ll>tree;
+	vector<ll>lazy;
+	int n;
+	segtree(vector<ll>&_arr) {
+		n = sz(_arr) - 1;
+		arr = _arr;
+		tree = vector<ll>(5 * n, 1e18);
+		lazy = vector<ll>(5 * n, 0);
+		build(1, n, 1);
+	}
+	void build(int s, int e, int p) {
+		if (s == e) {
+			tree[p] = arr[s];
+			return;
+		}
+		int mid = s + (e - s) / 2;
+		int a = 2 * p, b = a + 1;
+		build(s, mid, a);
+		build(mid + 1, e, b);
+		tree[p] = min(tree[a], tree[b]);
+	}
+	void push(int s, int e, int p) {
+
+		if (lazy[p]!=0) {
+			tree[p] += lazy[p];
+			if (s != e) {
+				lazy[2 * p] += lazy[p];
+				lazy[2 * p + 1] += lazy[p];
+			}
+			lazy[p] = 0;
+		}
+	}
+	void update(int s, int e, int p, int l, int r, ll val) {
+		//if (s > e)return;
+		push(s, e, p);
+		// no overlap
+		if (s > r || e < l)return;
+		if (s >=l && e<=r) {
+			lazy[p] += val;
+			push(s, e, p);
+			return;
+		}
+		int mid = s + (e - s) / 2;
+		int a = 2 * p, b = a + 1;
+		update(s, mid, a, l, r, val);
+		update(mid + 1, e, b, l, r, val);
+		tree[p] = min(tree[a], tree[b]);
+	}
+	ll query(int s, int e, int p, int l, int r) {
+		push(s, e, p);
+		if (s > r || e < l)return 1e18;
+		if (s >= l && e <= r) return tree[p];
+		int mid = s + (e - s) / 2, a = 2 * p, b = a + 1;
+		return min(query(s, mid, a, l, r), query(mid + 1, e, b, l, r));
+	}
+	void udt(int l, int r, ll val) {
+		update(1, n, 1, l, r, val);
+	}
+	ll rmq(int l, int r) {
+		return query(1, n, 1, l, r);
+	}
+};

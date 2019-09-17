@@ -1,0 +1,98 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <cstring>
+#include <map>
+#include <deque>
+#include <queue>
+#include <stack>
+#include <sstream>
+#include <numeric>
+#include <iostream>
+#include <iomanip>
+#include <cstdio>
+#include <cmath>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+#include <functional>
+#include <algorithm>
+#include <vector>
+#include <set>
+#include <complex>
+#include <list>
+#include <climits>
+#include <cctype>
+#include <bitset>
+using namespace std;
+#define all(v) ((v).begin()),((v).end())
+#define allr(v)	     ((v).rbegin()), ((v).rend())
+#define sz(v) ((int)(v).size())
+#define clr(v, d)        memset(v, d, sizeof(v))
+#define JSE ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#define MP(i,j) make_pair(int i,int j);
+#define vvi vector<vector<int>>
+#define vvc vector<vector<char>>
+#define vi vector<int>
+typedef long long ll;
+typedef unsigned long long ull;
+typedef  double ld;
+const double PI = acos(-1.0);
+const int OO = int(1e8);
+int dx[]{-1, 1, 0, 0};
+int dy[]{0, 0, -1, 1};
+void file(){
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin); //freopen("output.txt", "w", stdout);  
+#endif
+}
+int n;
+vector<int>adj[10001];
+int vis[10001];
+pair<int,int> per[10001];
+int dfs(int node)
+{
+	if (vis[node])
+		return 0;
+	vis[node] = 1;
+	int ret = 0;
+	int smx = 0;
+	for (int i = 0; i < sz(adj[node]); i++)
+	{
+		int x = dfs(adj[node][i]) + 1;
+		if (x >= ret)
+		{
+			smx = ret;
+			ret = x;
+		}
+		else if (x>smx)
+			smx = x;
+	}
+	if (smx == 0)
+		smx = 1;
+	 per[node] = { smx-1, ret-1 };
+	 return ret;
+}
+int main()
+{
+	//cout << setprecision(20) << fixed;
+	JSE
+		file();
+	//	freopen("friday.in", "r", stdin);
+	///////////
+	cin >> n;
+	for (int i = 0; i < n - 1; i++)
+	{
+		int u, v;
+		cin >> u>> v;
+		adj[u].push_back(v);
+		adj[v].push_back(u);
+	}
+	dfs(1);
+	int ans = 0;
+	for (int i = 1; i <= n; i++)
+	{
+		ans = max(ans, per[i].first + per[i].second);
+	}
+	cout << ans << endl;
+	return 0;
+}

@@ -1,0 +1,21 @@
+ll tree[10001];
+void add(int idx, int val)
+{
+	idx++;
+	while (idx <= 10000)
+	{
+		tree[idx - 1] += val;
+		idx += (idx&-idx);
+	}
+}
+ll getbt(int idx)
+{
+	idx++;
+	ll ret = 0;
+	while (idx)
+	{
+		ret += tree[idx - 1];
+		idx -= (idx&-idx);
+	}
+	return ret;
+}
