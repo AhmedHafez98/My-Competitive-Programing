@@ -48,7 +48,7 @@ This repository contains source codes for some of the problems I solved on onlin
 </details>
 
 ## Coaching
-* **Co-Coaching** 14th The 2020 Egyptian Collegiate Programming Contest.
+* **Co-Coaching** 14th team in the 2020 Egyptian Collegiate Programming Contest.
 * **Coaching** Senior problem solvers in ICPC Assiut University Community.
 * **Chairman** in ICPC Assiut University Community 2019 and 2020.
 * **Managing training system** for junior,senior Problem Solvers in ICPC Assiut University Community.
